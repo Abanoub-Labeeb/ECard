@@ -1,0 +1,55 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+   xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context.xsd
+   http://www.springframework.org/schema/jee 
+   http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+   http://www.springframework.org/schema/mvc 
+   http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+   http://www.springframework.org/schema/data/jpa
+    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+   
+   
+   
+   <!-- Adding Support for Component Scan -->
+   <context:component-scan base-package="org.ecards" />
+   <!-- Adding Support for repositories -->
+   <!-- moved this configuration to the applicaiotn config , used Annotation configuration instead -->
+   <!--  <jpa:repositories base-package="org.ecards.repository" /> -->
+ 
+   
+   <!-- Configure View Resolver -->
+   <!-- Will enable spring to search for the View files to resolve them -->
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+      <property name="prefix" value="/WEB-VIEWS/" />
+      <property name="suffix" value=".jsp" />
+   </bean>
+ 
+   <mvc:annotation-driven></mvc:annotation-driven>
+   <!--to enable open file via URL you must enable map from Url to folder  -->
+   <mvc:resources location="/RESOURCES/js/"    mapping="/js/**"></mvc:resources>
+   <mvc:resources location="/RESOURCES/css/"   mapping="/css/**"></mvc:resources>
+ 
+    <!-- to enable Rest to resturn Json -->
+ 	<mvc:annotation-driven >
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter"></bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+		</mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- moved this configuration to the applicaiotn config -->   
+ 	<!--<bean name="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">--> 
+	<!--	<property name="basename" value="classpath:/org/ecards/configuration/properties/validation" />-->
+    <!--    <property name="useCodeAsDefaultMessage" value="false" />-->
+    <!--</bean>-->
+ 	
+   </beans>
